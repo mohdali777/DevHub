@@ -2,13 +2,19 @@ import cors from "cors";
 import Express from "express";
 import cookieparser from "cookie-parser";
 import ErrorHandler from "./Middleware/ErrorHandler";
+import AppRoutes from "../Routes/index";
 const app = Express();
 
 export default function setupApp() {
-app.use(cors({origin: "*"}));
+app.use(cors({
+    origin:"http://localhost:5173",
+    credentials: true, 
+}));
 app.use(Express.json());
 app.use(Express.urlencoded({ extended: true }));
 app.use(cookieparser())
+
+app.use("/",AppRoutes)
 
 app.use(ErrorHandler)
 return app;

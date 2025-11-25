@@ -1,4 +1,5 @@
 export interface USER_DTO_REQ{
+_id:string    
 name:string,
 email:string,
 image?:{
@@ -11,6 +12,8 @@ role:"admin"|"user"|"author",
 is_verified:boolean,
 badge:"none"|"blue"|"silver"|"gold"|"red",
 bio:string,
+is_signup?:boolean
+is_google_signup?:boolean
 }
 
 export interface USER_DTO_RES{

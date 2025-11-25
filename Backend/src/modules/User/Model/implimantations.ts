@@ -4,7 +4,7 @@ import { IUser } from "./Interface";
 const UserSchema = new mongoose.Schema<IUser>({
 name:{type:String,required:true},
 email:{type:String,required:true,unique:true},
-image:{image_url:{type:String,required:true},public_id:{type:String,required:true}},
+image:{image_url:{type:String},public_id:{type:String}},
 password:{type:String,required:true},
 googleid:{type:String,default:null}, 
 role:{type:String,enum:["admin","user","author"],default:"user"},
