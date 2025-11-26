@@ -8,7 +8,7 @@ interface PropsLogo{
 function LogoApp({w,h}:PropsLogo) {
   return (
     <div>
-      <img className={`w-${w} h-${h}`}  src={DevHubLogo}  alt="DevHub" />
+      <img  className={`${w} ${h}`}  src={DevHubLogo}  alt="DevHub" />
     </div>
   )
 }

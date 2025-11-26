@@ -24,7 +24,9 @@ Updated.bio = Data.bio
 return Updated
 }
 
-private ValidateCreate(Data:Partial<USER_DTO_REQ>):void{     
+private ValidateCreate(Data:Partial<USER_DTO_REQ>):void{    
+    console.log(Data);
+     
 if(Data.name){
 this._CheckRequiredString(Data.name,"user name")    
 }         
@@ -65,7 +67,8 @@ role:Data.is_signup?"user": Data.role!,
 is_verified:Data.is_signup ? false:Data.is_verified!,
 badge:Data.is_signup && !Data.is_verified ? "none" : Data.badge!,
 saved_articles: [],
-bio:"",     
+bio:"", 
+status:"active"    
 }
 }
 }

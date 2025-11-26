@@ -70,7 +70,22 @@ throw error
 
 async GenarateAcesss(RefreshToken: string): Promise<string> { 
 try {
-    return ""
+if(!RefreshToken) throw new AppError("Refresh Token Is Missing",401)   
+const Verfiy:TokenPayload = this.TokenManagement.verifyRefreshToken(RefreshToken)
+const {UserId} = Verfiy
+const IsUser = await this.userRepo.FindOne({_id:UserId})
+if(!IsUser) throw new AppError("User Not Exist",404) 
+const payload:TokenPayload = {
+UserId:IsUser._id,
+UserName:IsUser.name,
+UserEmail:IsUser.email,
+ImageUrl:IsUser.image.image_url,
+Role:IsUser.role,
+IsVerified:IsUser.is_verified,
+Badge:IsUser.badge
+}   
+const AccessToken = await this.TokenManagement.generateAccessToken(payload)
+return AccessToken
 } catch (error) {
 throw error  
 }
@@ -95,7 +110,7 @@ name:Payload.name,
 email:Payload.email,
 googleid:Payload.sub,
 password:"12345678Ab@",
-is_signup:false,
+is_signup:true,
 is_google_signup:true,
 }
 const id = await this.userService.Create(NewUserPayload)
@@ -116,9 +131,23 @@ throw error
 
 
 
-async VerifyUser(RefreshToken: string): Promise<Partial<ReturnPayload>> {
+async VerifyUser(RefreshToken: string): Promise<Partial<TokenPayload>> {
 try {
-return {}
+if(!RefreshToken) throw new AppError("Refresh Token Is Missing",401)   
+const Verfiy:TokenPayload = this.TokenManagement.verifyRefreshToken(RefreshToken)
+const {UserId} = Verfiy
+const IsUser = await this.userRepo.FindOne({_id:UserId})
+if(!IsUser) throw new AppError("User Not Exist",404) 
+const payload:TokenPayload = {
+UserId:IsUser._id,
+UserName:IsUser.name,
+UserEmail:IsUser.email,
+ImageUrl:IsUser.image.image_url,
+Role:IsUser.role,
+IsVerified:IsUser.is_verified,
+Badge:IsUser.badge
+}   
+return payload
 } catch (error) {
 throw error
 }

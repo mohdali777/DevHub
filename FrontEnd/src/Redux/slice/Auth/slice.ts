@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { GoogleAuth, LoginUser, SignupUser } from "./reducers"
+import { GoogleAuth, LoginUser, SignupUser, VerifyUser } from "./reducers"
 
 export interface InitialStateI{
 UserId:string|null
@@ -84,6 +84,27 @@ state.Badge = action.payload.Badge
 state.isLoggedIn = true
 })
 .addCase(SignupUser.rejected,(state)=>{
+state.UserId = null
+state.UserName = null
+state.UserEmail = null
+state.ImageUrl = null
+state.Role = null
+state.IsVerified = null
+state.Badge = null
+state.isLoggedIn = false
+})
+builder
+.addCase(VerifyUser.fulfilled,(state,action)=>{    
+state.UserId = action.payload.UserId
+state.UserName = action.payload.UserName
+state.UserEmail = action.payload.UserEmail
+state.ImageUrl = action.payload.ImageUrl
+state.Role = action.payload.Role
+state.IsVerified = action.payload.IsVerified
+state.Badge = action.payload.Badge
+state.isLoggedIn = true
+})
+.addCase(VerifyUser.rejected,(state)=>{
 state.UserId = null
 state.UserName = null
 state.UserEmail = null

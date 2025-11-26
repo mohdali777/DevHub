@@ -27,6 +27,7 @@ bio: Data.bio,
 password: Data.password,
 googleid: Data.googleid,
 role: Data.role,  
+status:Data.status
 }   
 } catch (error) {
 console.log(error);
@@ -50,6 +51,7 @@ bio: item.bio,
 password: item.password,
 googleid: item.googleid,
 role: item.role, 
+status:item.status
 }))
 } catch (error) {
 console.log(error);

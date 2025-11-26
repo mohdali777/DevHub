@@ -12,4 +12,5 @@ is_verified:boolean,
 badge:"none"|"blue"|"silver"|"gold"|"red",
 saved_articles:string[],
 bio:string,
+status:"active"|"blocked"|"inactive"
 }

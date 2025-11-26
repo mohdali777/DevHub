@@ -31,6 +31,7 @@ is_verified:boolean,
 badge:"none"|"blue"|"silver"|"gold"|"red",
 saved_articles:string[],
 bio:string,
+status:"active"|"blocked"|"inactive"
 }
 
 export interface USER_DTO_DB{
@@ -47,4 +48,5 @@ is_verified:boolean,
 badge:"none"|"blue"|"silver"|"gold"|"red",
 saved_articles:string[],
 bio:string,
+status:"active"|"blocked"|"inactive"
 }

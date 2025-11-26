@@ -48,3 +48,18 @@ return thunkAPI.rejectWithValue("An unexpected error occurred")
 }
 })
 
+export const VerifyUser = createAsyncThunk(
+"auth/VerifyUser",async (_,thunkAPI)=>{
+try {
+const resonse = await axiosInstance.get("/verifyuser")
+const TokenPayload = resonse.data
+return TokenPayload as InitialStateI
+} catch (error) {
+if(error instanceof AxiosError){
+return thunkAPI.rejectWithValue(error.response?.data?.message||"login failed")
+}else{
+return thunkAPI.rejectWithValue("An unexpected error occurred")
+}
+}
+})
+

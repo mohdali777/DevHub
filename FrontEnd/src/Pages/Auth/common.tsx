@@ -47,7 +47,7 @@ style={{ animationDelay: '1s' }}
 <div className="relative">
 <div className="w-full max-w-lg">
 <div className="relative p-8 rounded-3xl bg-white/10 backdrop-blur-sm border border-white/20">
-<LogoApp w={'25'} h={'23'}/>
+<LogoApp w={'w-25'} h={'h-23'}/>
 </div>
 </div>
 </div>
@@ -100,7 +100,7 @@ Connect, share, and grow with a supportive tech community.
 {/* Logo - Mobile only */}
 <div className="flex flex-col items-center mb-5 lg:hidden">
 <div className="relative p-4 rounded-2xl">
-<LogoApp  w={'21'} h={'19'} />
+<LogoApp  w={'w-21'} h={'h-19'} />
 </div>
 <p className="text-gray-600 text-sm mt-2">
 {isLogin

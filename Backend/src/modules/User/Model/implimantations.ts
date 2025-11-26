@@ -12,6 +12,7 @@ is_verified:{type:Boolean,default:false},
 badge:{type:String,enum:["none","blue","silver","gold","red"],default:"none"},
 saved_articles:[{type:mongoose.Schema.Types.ObjectId,ref:"article",default:[]}],
 bio:{type:String,default:""},
+status:{type:String,enum:["active","inactive","blocked"],default:"active"}
 },{timestamps:true});
 
 
