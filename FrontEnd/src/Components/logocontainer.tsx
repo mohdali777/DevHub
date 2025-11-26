@@ -1,9 +1,14 @@
 import React from 'react'
 import DevHubLogo from '../assets/1763975559494-removebg-preview (1).png'
-function LogoApp() {
+
+interface PropsLogo{
+  w:string
+  h:string
+}
+function LogoApp({w,h}:PropsLogo) {
   return (
     <div>
-      <img className='w-25 h-23 '  src={DevHubLogo}  alt="DevHub" />
+      <img className={`w-${w} h-${h}`}  src={DevHubLogo}  alt="DevHub" />
     </div>
   )
 }

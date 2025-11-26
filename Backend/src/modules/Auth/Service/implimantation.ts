@@ -46,13 +46,14 @@ if(isUser) throw new AppError("email alredy taken",409)
 const NewUserPayload:Partial<USER_DTO_REQ> = {
 email:Payload.email,
 password:Payload.password,
+name:Payload.name,
 is_signup:true,
 is_google_signup:false,
 }    
 const id = await this.userService.Create(NewUserPayload)
 const TokenPayload:TokenPayload = {
 UserId:id,
-UserName:"User",
+UserName:Payload.name || "User",
 UserEmail:Payload.email,
 ImageUrl: "",
 Role:"user",

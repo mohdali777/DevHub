@@ -2,22 +2,26 @@ import GoogleIcon from '../../assets/google-icon-logo-svgrepo-com.svg';
 import LogoApp from '../../Components/logocontainer';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useGoogleLogin } from '@react-oauth/google';
-import axiosInstance from '../../Api/loginaxios';
+import { toast } from 'sonner';
+import { useDispatch } from 'react-redux';
+import type { AppDispatch } from '../../Redux/store';
+import { GoogleAuth } from '../../Redux/slice/Auth/reducers';
 
 const LoginPage = () => {
 const navigate = useNavigate();
 const location = useLocation();
 const isLogin = location.pathname.includes('login');
-
+const dispatch = useDispatch<AppDispatch>()
 
 const login = useGoogleLogin({
 flow:"auth-code",    
 onSuccess: async({code}) => {
 try {
-const response = await axiosInstance.post("/googlelogin",{token:code});
+const response = await dispatch(GoogleAuth({token:code})).unwrap();
 console.log(response);
+
 } catch (error) {
-console.log(error);
+toast.error(error as string)
 }
 },
 onError: (err) => console.error("Login Failed:", err),
@@ -43,7 +47,7 @@ style={{ animationDelay: '1s' }}
 <div className="relative">
 <div className="w-full max-w-lg">
 <div className="relative p-8 rounded-3xl bg-white/10 backdrop-blur-sm border border-white/20">
-<LogoApp/>
+<LogoApp w={'25'} h={'23'}/>
 </div>
 </div>
 </div>
@@ -96,7 +100,7 @@ Connect, share, and grow with a supportive tech community.
 {/* Logo - Mobile only */}
 <div className="flex flex-col items-center mb-5 lg:hidden">
 <div className="relative p-4 rounded-2xl">
-<LogoApp />
+<LogoApp  w={'21'} h={'19'} />
 </div>
 <p className="text-gray-600 text-sm mt-2">
 {isLogin

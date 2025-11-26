@@ -17,7 +17,7 @@ constructor(
 ){}
 
 async Create(Data:Partial<USER_DTO_REQ>): Promise<string> {
-try {
+try {    
 const ValidatedData = this.userEntity.Create(Data)
 const IsEmail = await this.userRepo.FindOne({email:ValidatedData.email})
 if(IsEmail) throw new AppError("Email already exists",409)

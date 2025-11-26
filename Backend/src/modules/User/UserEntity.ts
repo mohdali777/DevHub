@@ -11,10 +11,8 @@ return this.ReturnData(Data)
 
 Update(Data:Partial<USER_DTO_REQ>):Partial<USER_DTO_DB> {
 const Updated:Partial<USER_DTO_DB> = {}
-if(Data.name){
 this._CheckRequiredString(Data.name,"Name")
 Updated.name = Data.name
-}
 if(Data.googleid){
 this._CheckRequiredString(Data.googleid,"Google ID")
 Updated.googleid = Data.googleid
