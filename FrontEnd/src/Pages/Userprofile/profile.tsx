@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { Camera, Mail, MapPin, Link2, Calendar, Edit2, Save, X, Github, Twitter, Linkedin, Briefcase, Award, BookOpen, Heart, MessageCircle, Eye, Bookmark } from 'lucide-react';
+import { Camera, Mail, MapPin, Link2, Calendar, Edit2, Save, X, Github, Twitter, Linkedin, Briefcase, Award, BookOpen, Heart, MessageCircle, Eye, Bookmark, LogOut, Shield } from 'lucide-react';
 import VerificationBadge from '../../Components/badge/badge';
+import { useNavigate } from 'react-router-dom';
 
 const UserProfilePage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [activeTab, setActiveTab] = useState('saved');
-
-  // User data - this would come from your database/API
+  const [showEditModal, setShowEditModal] = useState(false);
+  const navigate = useNavigate()
   const [userData, setUserData] = useState({
     name: 'Alex Kumar',
     email: 'alex.kumar@devhub.com',
@@ -27,12 +28,20 @@ const UserProfilePage = () => {
       saved: 24,
       comments: 89,
       likes: 342
-    }
+    },
+    experience: [
+      {
+        id: 1,
+        position: 'Senior DevOps Engineer',
+        company: 'TechCorp Inc.',
+        duration: '2020 - Present'
+      }
+    ],
+    skills: ['Kubernetes', 'Docker', 'AWS', 'Terraform', 'CI/CD', 'Security', 'Python', 'Go']
   });
 
   const [editData, setEditData] = useState({ ...userData });
 
-  // User's saved articles
   const savedArticles = [
     {
       id: 1,
@@ -55,21 +64,9 @@ const UserProfilePage = () => {
       readTime: 10,
       likes: 1245,
       comments: 89
-    },
-    {
-      id: 3,
-      title: 'Microservices Monitoring with Prometheus',
-      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=250&fit=crop',
-      category: 'Monitoring',
-      author: 'Emma Wilson',
-      date: 'Nov 3, 2024',
-      readTime: 15,
-      likes: 2103,
-      comments: 234
     }
   ];
 
-  // User's comments
   const userComments = [
     {
       id: 1,
@@ -77,35 +74,35 @@ const UserProfilePage = () => {
       comment: 'Great article! I implemented these practices in our production cluster and saw immediate improvements in security posture.',
       date: 'Nov 20, 2024',
       likes: 23
-    },
-    {
-      id: 2,
-      articleTitle: 'Building Resilient Microservices',
-      comment: 'This is exactly what we needed. The event sourcing pattern really helped us handle failures gracefully.',
-      date: 'Nov 18, 2024',
-      likes: 15
-    },
-    {
-      id: 3,
-      articleTitle: 'GitOps Workflows: Infrastructure as Code',
-      comment: 'We migrated to GitOps last month using these exact principles. Game changer for our deployment process!',
-      date: 'Nov 15, 2024',
-      likes: 31
     }
   ];
 
+  const handleEdit = () => {
+    setEditData({ ...userData });
+    setShowEditModal(true);
+  };
+
   const handleSave = () => {
     setUserData({ ...editData });
-    setIsEditing(false);
+    setShowEditModal(false);
   };
 
   const handleCancel = () => {
     setEditData({ ...userData });
-    setIsEditing(false);
+    setShowEditModal(false);
+  };
+
+  const handleLogout = () => {
+    alert('Logged out successfully!');
+  };
+
+  const handleAdminPanel = () => {
+    alert('Redirecting to Admin Panel...');
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50">
+      {/* Header with Action Buttons */}
       {/* Cover Image */}
       <div className="relative h-72 bg-gradient-to-r from-blue-500 to-purple-600 overflow-hidden">
         <img 
@@ -114,14 +111,6 @@ const UserProfilePage = () => {
           className="w-full h-full object-cover opacity-50"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-    
-        
-        {isEditing && (
-          <button className="absolute bottom-4 right-4 bg-white/20 backdrop-blur-md text-white px-4 py-2 rounded-xl font-semibold hover:bg-white/30 transition-all flex items-center gap-2">
-            <Camera className="w-4 h-4" />
-            Change Cover
-          </button>
-        )}
       </div>
 
       {/* Profile Content */}
@@ -130,149 +119,74 @@ const UserProfilePage = () => {
         <div className="bg-white/80 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/20 p-8 mb-8">
           <div className="flex flex-col md:flex-row gap-6">
             {/* Avatar */}
+            <div>
             <div className="relative">
-              <img 
-                src={userData.avatar} 
-                alt={userData.name}
-                className="w-40 h-40 rounded-3xl object-cover border-4 border-white shadow-xl"
-              />
-              {isEditing && (
-                <button className="absolute bottom-2 right-2 bg-purple-600 text-white p-2 rounded-xl hover:bg-purple-700 transition-colors">
-                  <Camera className="w-4 h-4" />
-                </button>
-              )}
+            <img 
+            src={userData.avatar} 
+            alt={userData.name}
+            className="w-40 h-40 rounded-3xl object-cover border-4 border-white shadow-xl"
+            />
             </div>
-
+            <div className=" flex flex-col gap-4 mt-4">
+            <button
+            onClick={()=>navigate("/admin")}
+            className="flex items-center gap-2 bg-gradient-to-r from-orange-500 to-red-600 text-white px-4 py-2 rounded-lg font-semibold hover:shadow-lg transition-all text-sm"
+            >
+            <Shield className="w-4 h-4" />
+            Admin Panel
+            </button>
+            <button
+            onClick={handleLogout}
+            className="flex items-center gap-2 bg-gray-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-gray-700 transition-all text-sm"
+            >
+            <LogOut className="w-4 h-4" />
+            Logout
+            </button>
+            </div>
+            </div>
             {/* User Info */}
             <div className="flex-1">
               <div className="flex items-start justify-between mb-4">
                 <div>
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      value={editData.name}
-                      onChange={(e) => setEditData({ ...editData, name: e.target.value })}
-                      className="text-4xl font-black text-gray-900 border-b-2 border-purple-500 focus:outline-none mb-2"
-                    />
-                  ) : (
-                    <>
-                    <div className='flex gap-2'>
-                      <h1 className="text-4xl font-black text-gray-900 mb-2">{userData.name}</h1>
-                       <VerificationBadge type='admin' size={30}/>
-                    </div>
-                    </>
-                    
-                  )}
-                  
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      value={editData.role}
-                      onChange={(e) => setEditData({ ...editData, role: e.target.value })}
-                      className="text-lg text-gray-600 border-b border-gray-300 focus:outline-none"
-                    />
-                  ) : (
-                    <p className="text-lg text-gray-600">{userData.role}</p>
-                  )}
+                  <div className='flex gap-3'>
+                  <h1 className="text-4xl font-black text-gray-900 mb-2">{userData.name}</h1>
+                   <VerificationBadge type='admin' size={30} />
+                  </div>
+                  <p className="text-lg text-gray-600">{userData.role}</p>
                 </div>
 
-                {/* Edit Button */}
-                {!isEditing ? (
-                  <button
-                    onClick={() => setIsEditing(true)}
-                    className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-xl hover:scale-105 transition-all"
-                  >
-                    <Edit2 className="w-5 h-5" />
-                    Edit Profile
-                  </button>
-                ) : (
-                  <div className="flex gap-2">
-                    <button
-                      onClick={handleSave}
-                      className="flex items-center gap-2 bg-green-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-green-700 transition-all"
-                    >
-                      <Save className="w-5 h-5" />
-                      Save
-                    </button>
-                    <button
-                      onClick={handleCancel}
-                      className="flex items-center gap-2 bg-gray-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-gray-700 transition-all"
-                    >
-                      <X className="w-5 h-5" />
-                      Cancel
-                    </button>
-                  </div>
-                )}
+                <button
+                  onClick={handleEdit}
+                  className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-xl hover:scale-105 transition-all"
+                >
+                  <Edit2 className="w-5 h-5" />
+                  Edit Profile
+                </button>
               </div>
 
               {/* Bio */}
-              {isEditing ? (
-                <textarea
-                  value={editData.bio}
-                  onChange={(e) => setEditData({ ...editData, bio: e.target.value })}
-                  rows="3"
-                  className="w-full text-gray-700 leading-relaxed mb-4 border-2 border-gray-200 rounded-xl p-3 focus:border-purple-500 focus:outline-none"
-                />
-              ) : (
-                <p className="text-gray-700 leading-relaxed mb-4">{userData.bio}</p>
-              )}
+              <p className="text-gray-700 leading-relaxed mb-4">{userData.bio}</p>
 
               {/* Details */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
                 <div className="flex items-center gap-2 text-gray-600">
                   <Mail className="w-4 h-4" />
-                  {isEditing ? (
-                    <input
-                      type="email"
-                      value={editData.email}
-                      onChange={(e) => setEditData({ ...editData, email: e.target.value })}
-                      className="text-sm border-b border-gray-300 focus:outline-none"
-                    />
-                  ) : (
-                    <span className="text-sm">{userData.email}</span>
-                  )}
+                  <span className="text-sm">{userData.email}</span>
                 </div>
                 
                 <div className="flex items-center gap-2 text-gray-600">
                   <MapPin className="w-4 h-4" />
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      value={editData.location}
-                      onChange={(e) => setEditData({ ...editData, location: e.target.value })}
-                      className="text-sm border-b border-gray-300 focus:outline-none"
-                    />
-                  ) : (
-                    <span className="text-sm">{userData.location}</span>
-                  )}
+                  <span className="text-sm">{userData.location}</span>
                 </div>
                 
                 <div className="flex items-center gap-2 text-gray-600">
                   <Link2 className="w-4 h-4" />
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      value={editData.website}
-                      onChange={(e) => setEditData({ ...editData, website: e.target.value })}
-                      className="text-sm border-b border-gray-300 focus:outline-none"
-                    />
-                  ) : (
-                    <a href={`https://${userData.website}`} className="text-sm text-purple-600 hover:underline">{userData.website}</a>
-                  )}
+                  <a href={`https://${userData.website}`} className="text-sm text-purple-600 hover:underline">{userData.website}</a>
                 </div>
                 
                 <div className="flex items-center gap-2 text-gray-600">
                   <Briefcase className="w-4 h-4" />
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      value={editData.company}
-                      onChange={(e) => setEditData({ ...editData, company: e.target.value })}
-                      className="text-sm border-b border-gray-300 focus:outline-none"
-                    />
-                  ) : (
-                    <span className="text-sm">{userData.company}</span>
-                  )}
+                  <span className="text-sm">{userData.company}</span>
                 </div>
               </div>
 
@@ -431,38 +345,66 @@ const UserProfilePage = () => {
 
             {activeTab === 'about' && (
               <div className="space-y-6">
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">About Me</h3>
-                  <p className="text-gray-700 leading-relaxed">{userData.bio}</p>
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-gray-900 mb-3">About Me</h3>
+                    <p className="text-gray-700 leading-relaxed">{userData.bio}</p>
+                  </div>
+                  <button
+                    onClick={handleEdit}
+                    className="ml-4 p-2 hover:bg-gray-100 rounded-lg transition-all"
+                  >
+                    <Edit2 className="w-5 h-5 text-purple-600" />
+                  </button>
                 </div>
                 
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">Experience</h3>
-                  <div className="space-y-4">
-                    <div className="bg-gray-50 rounded-2xl p-4">
-                      <h4 className="font-bold text-gray-900">{userData.role}</h4>
-                      <p className="text-sm text-gray-600">{userData.company}</p>
-                      <p className="text-xs text-gray-500 mt-1">2020 - Present</p>
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-gray-900 mb-3">Experience</h3>
+                    <div className="space-y-4">
+                      {userData.experience.map(exp => (
+                        <div key={exp.id} className="bg-gray-50 rounded-2xl p-4">
+                          <h4 className="font-bold text-gray-900">{exp.position}</h4>
+                          <p className="text-sm text-gray-600">{exp.company}</p>
+                          <p className="text-xs text-gray-500 mt-1">{exp.duration}</p>
+                        </div>
+                      ))}
                     </div>
                   </div>
+                  <button
+                    onClick={handleEdit}
+                    className="ml-4 p-2 hover:bg-gray-100 rounded-lg transition-all"
+                  >
+                    <Edit2 className="w-5 h-5 text-purple-600" />
+                  </button>
                 </div>
 
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">Skills</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {['Kubernetes', 'Docker', 'AWS', 'Terraform', 'CI/CD', 'Security', 'Python', 'Go'].map(skill => (
-                      <span key={skill} className="bg-purple-100 text-purple-700 px-4 py-2 rounded-full text-sm font-semibold">
-                        {skill}
-                      </span>
-                    ))}
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-gray-900 mb-3">Skills</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {userData.skills.map(skill => (
+                        <span key={skill} className="bg-purple-100 text-purple-700 px-4 py-2 rounded-full text-sm font-semibold">
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
                   </div>
+                  <button
+                    onClick={handleEdit}
+                    className="ml-4 p-2 hover:bg-gray-100 rounded-lg transition-all flex-shrink-0"
+                  >
+                    <Edit2 className="w-5 h-5 text-purple-600" />
+                  </button>
                 </div>
 
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">Member Since</h3>
-                  <div className="flex items-center gap-2 text-gray-600">
-                    <Calendar className="w-5 h-5" />
-                    <span>{userData.joinDate}</span>
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-gray-900 mb-3">Member Since</h3>
+                    <div className="flex items-center gap-2 text-gray-600">
+                      <Calendar className="w-5 h-5" />
+                      <span>{userData.joinDate}</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -470,6 +412,206 @@ const UserProfilePage = () => {
           </div>
         </div>
       </div>
+
+      {/* Edit Modal */}
+      {showEditModal && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            {/* Modal Header */}
+            <div className="sticky top-0 bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6 flex items-center justify-between">
+              <h2 className="text-2xl font-bold">Edit Profile</h2>
+              <button
+                onClick={handleCancel}
+                className="p-1 hover:bg-white/20 rounded-lg transition-all"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+
+            {/* Modal Content */}
+            <div className="p-8 space-y-6">
+              {/* Name */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-900 mb-2">Name</label>
+                <input
+                  type="text"
+                  value={editData.name}
+                  onChange={(e) => setEditData({ ...editData, name: e.target.value })}
+                  className="w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:outline-none"
+                />
+              </div>
+
+              {/* Email */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-900 mb-2">Email</label>
+                <input
+                  type="email"
+                  value={editData.email}
+                  onChange={(e) => setEditData({ ...editData, email: e.target.value })}
+                  className="w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:outline-none"
+                />
+              </div>
+
+              {/* Bio */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-900 mb-2">Bio</label>
+                <textarea
+                  value={editData.bio}
+                  onChange={(e) => setEditData({ ...editData, bio: e.target.value })}
+                  rows="4"
+                  className="w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:outline-none resize-none"
+                />
+              </div>
+
+              {/* Location */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-900 mb-2">Location</label>
+                <input
+                  type="text"
+                  value={editData.location}
+                  onChange={(e) => setEditData({ ...editData, location: e.target.value })}
+                  className="w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:outline-none"
+                />
+              </div>
+
+              {/* Website */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-900 mb-2">Website</label>
+                <input
+                  type="text"
+                  value={editData.website}
+                  onChange={(e) => setEditData({ ...editData, website: e.target.value })}
+                  className="w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:outline-none"
+                />
+              </div>
+
+              {/* Company */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-900 mb-2">Company</label>
+                <input
+                  type="text"
+                  value={editData.company}
+                  onChange={(e) => setEditData({ ...editData, company: e.target.value })}
+                  className="w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:outline-none"
+                />
+              </div>
+
+              {/* Role */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-900 mb-2">Role</label>
+                <input
+                  type="text"
+                  value={editData.role}
+                  onChange={(e) => setEditData({ ...editData, role: e.target.value })}
+                  className="w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:outline-none"
+                />
+              </div>
+
+              {/* Social Links */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-900 mb-3">Social Links</label>
+                <div className="space-y-3">
+                  <input
+                    type="text"
+                    placeholder="GitHub Username"
+                    value={editData.social.github}
+                    onChange={(e) => setEditData({ ...editData, social: { ...editData.social, github: e.target.value } })}
+                    className="w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:outline-none"
+                  />
+                  <input
+                    type="text"
+                    placeholder="Twitter Handle"
+                    value={editData.social.twitter}
+                    onChange={(e) => setEditData({ ...editData, social: { ...editData.social, twitter: e.target.value } })}
+                    className="w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:outline-none"
+                  />
+                  <input
+                    type="text"
+                    placeholder="LinkedIn Username"
+                    value={editData.social.linkedin}
+                    onChange={(e) => setEditData({ ...editData, social: { ...editData.social, linkedin: e.target.value } })}
+                    className="w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              {/* Skills */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-900 mb-2">Skills (comma-separated)</label>
+                <textarea
+                  value={editData.skills.join(', ')}
+                  onChange={(e) => setEditData({ ...editData, skills: e.target.value.split(',').map(s => s.trim()) })}
+                  rows="3"
+                  className="w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:outline-none resize-none"
+                  placeholder="e.g. Kubernetes, Docker, AWS"
+                />
+              </div>
+
+              {/* Experience */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-900 mb-3">Experience</label>
+                <div className="space-y-4">
+                  {editData.experience.map((exp, idx) => (
+                    <div key={exp.id} className="border-2 border-gray-200 rounded-xl p-4 space-y-3">
+                      <input
+                        type="text"
+                        placeholder="Position"
+                        value={exp.position}
+                        onChange={(e) => {
+                          const updated = [...editData.experience];
+                          updated[idx].position = e.target.value;
+                          setEditData({ ...editData, experience: updated });
+                        }}
+                        className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none text-sm"
+                      />
+                      <input
+                        type="text"
+                        placeholder="Company"
+                        value={exp.company}
+                        onChange={(e) => {
+                          const updated = [...editData.experience];
+                          updated[idx].company = e.target.value;
+                          setEditData({ ...editData, experience: updated });
+                        }}
+                        className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none text-sm"
+                      />
+                      <input
+                        type="text"
+                        placeholder="Duration (e.g. 2020 - Present)"
+                        value={exp.duration}
+                        onChange={(e) => {
+                          const updated = [...editData.experience];
+                          updated[idx].duration = e.target.value;
+                          setEditData({ ...editData, experience: updated });
+                        }}
+                        className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none text-sm"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Buttons */}
+              <div className="flex gap-3 pt-4">
+                <button
+                  onClick={handleSave}
+                  className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-green-600 to-green-700 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition-all"
+                >
+                  <Save className="w-5 h-5" />
+                  Save Changes
+                </button>
+                <button
+                  onClick={handleCancel}
+                  className="flex-1 flex items-center justify-center gap-2 bg-gray-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-gray-700 transition-all"
+                >
+                  <X className="w-5 h-5" />
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -4,10 +4,12 @@ import Login from "./Pages/Auth/login"
 import Signup from "./Pages/Auth/signup"
 import ModernDevArticlesApp from "./layouts/UserLayout"
 import HomePage from "./Pages/Home/home"
-import ArticleHome from "./Pages/Articles/artilcemain"
 import PublicRoutes from "./Routes/PublicRoutes"
 import UserRoutes from "./Routes/UserRoutes"
 import UserProfilePage from "./Pages/Userprofile/profile"
+import ArticlePage from "./Pages/Articles/artilcemain"
+import AdminLayout from "./layouts/admin"
+import AdminRoutes from "./Routes/admin"
 
 function App() {
 return (
@@ -25,11 +27,21 @@ return (
 <Route element={<UserRoutes/>}>
 <Route path="/" element={<ModernDevArticlesApp/>}>
 <Route index element={<HomePage/>} />
-<Route path="/articles" element={<ArticleHome/>} />
+<Route path="/articles" element={<ArticlePage/>} />
 <Route path="/user/profile" element={<UserProfilePage/>} />
 </Route>
 </Route>
+
+
+<Route element={<AdminRoutes/>}>
+<Route path="/admin" element={<AdminLayout/>}>
+</Route>
+</Route>
 </Routes>
+
+
+
+
 </>
 )
 }

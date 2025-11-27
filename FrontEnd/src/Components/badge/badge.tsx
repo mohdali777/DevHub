@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { CheckCircle, Shield, Award, Star, Badge } from 'lucide-react';
+import { CheckCircle, Shield, Award, Star } from 'lucide-react';
 
 const VerificationBadge = ({ type = 'blue', size = 20 }) => {
   const [showTooltip, setShowTooltip] = useState(false);

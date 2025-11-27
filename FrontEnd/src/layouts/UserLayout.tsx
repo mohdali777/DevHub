@@ -16,7 +16,6 @@ return (
 {/* Header */}
 <Header />
 {/* Breadcrumbs */}
-
 {/* Main Content Outlet */}
 <main className="relative">
 <Outlet />
