@@ -1,8 +1,8 @@
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, type LucideIcon } from "lucide-react";
 import React from "react";
 
 interface ItemsProps{
-items:{icon:any,
+items:{icon:LucideIcon,
      label:string,
     active: boolean 
     href?:string

@@ -1,10 +1,10 @@
-import { Mail } from 'lucide-react'
+import { Mail, type LucideIcon } from 'lucide-react'
 import React from 'react'
 
 interface MailInputProps {
 value: string
 Onchange:(e: React.ChangeEvent<HTMLInputElement>) => void
-Icon:any,
+Icon:LucideIcon,
 Label:string,
 }
 

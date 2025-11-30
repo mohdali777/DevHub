@@ -10,6 +10,9 @@ import UserProfilePage from "./Pages/Userprofile/profile"
 import ArticlePage from "./Pages/Articles/artilcemain"
 import AdminLayout from "./layouts/admin"
 import AdminRoutes from "./Routes/admin"
+import ArticleReadingPage from "./Pages/Articles/articleview"
+import AdminArticleListing from "./Pages/Articles/admin/Listing"
+import CreateArticle from "./Pages/Articles/admin/Create"
 
 function App() {
 return (
@@ -28,6 +31,7 @@ return (
 <Route path="/" element={<ModernDevArticlesApp/>}>
 <Route index element={<HomePage/>} />
 <Route path="/articles" element={<ArticlePage/>} />
+<Route path="/articles/view" element={<ArticleReadingPage/>} />
 <Route path="/user/profile" element={<UserProfilePage/>} />
 </Route>
 </Route>
@@ -35,6 +39,8 @@ return (
 
 <Route element={<AdminRoutes/>}>
 <Route path="/admin" element={<AdminLayout/>}>
+<Route path="articles" element={<AdminArticleListing/>}></Route>
+<Route path="articles/create" element={<CreateArticle/>}></Route>
 </Route>
 </Route>
 </Routes>

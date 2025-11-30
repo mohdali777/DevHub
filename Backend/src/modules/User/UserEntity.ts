@@ -11,15 +11,13 @@ return this.ReturnData(Data)
 
 Update(Data:Partial<USER_DTO_REQ>):Partial<USER_DTO_DB> {
 const Updated:Partial<USER_DTO_DB> = {}
+if(Data.name){
 this._CheckRequiredString(Data.name,"Name")
 Updated.name = Data.name
+}
 if(Data.googleid){
 this._CheckRequiredString(Data.googleid,"Google ID")
 Updated.googleid = Data.googleid
-}
-if(Data.bio){
-this._CheckRequiredString(Data.bio,"Bio")
-Updated.bio = Data.bio
 }
 return Updated
 }
@@ -67,7 +65,6 @@ role:Data.is_signup?"user": Data.role!,
 is_verified:Data.is_signup ? false:Data.is_verified!,
 badge:Data.is_signup && !Data.is_verified ? "none" : Data.badge!,
 saved_articles: [],
-bio:"", 
 status:"active"    
 }
 }

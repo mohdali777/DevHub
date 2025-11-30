@@ -11,7 +11,6 @@ googleid:string|null,
 role:"admin"|"user"|"author",
 is_verified:boolean,
 badge:"none"|"blue"|"silver"|"gold"|"red",
-bio:string,
 is_signup?:boolean
 is_google_signup?:boolean
 }
@@ -30,7 +29,6 @@ role:"admin"|"user"|"author",
 is_verified:boolean,
 badge:"none"|"blue"|"silver"|"gold"|"red",
 saved_articles:string[],
-bio:string,
 status:"active"|"blocked"|"inactive"
 }
 
@@ -47,6 +45,5 @@ role:"admin"|"user"|"author",
 is_verified:boolean,
 badge:"none"|"blue"|"silver"|"gold"|"red",
 saved_articles:string[],
-bio:string,
 status:"active"|"blocked"|"inactive"
 }

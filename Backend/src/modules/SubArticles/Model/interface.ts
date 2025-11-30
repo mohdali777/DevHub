@@ -4,6 +4,10 @@ export interface IContentBlock{
 heading:string,
 text:string
 list:string[],
+links:{
+    url:string,
+    caption:string
+},
 images:{
     image:{
         image_url:string,

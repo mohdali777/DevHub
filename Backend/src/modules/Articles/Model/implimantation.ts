@@ -9,6 +9,7 @@ const ArticleSchema = new mongoose.Schema<IArticle>({
  category:{type:mongoose.Schema.Types.ObjectId,required:true}, 
  author:{type:mongoose.Schema.Types.ObjectId,ref:"user",required:true},
  likes:[{type:mongoose.Schema.Types.ObjectId,ref:"user",default:[]}],
+ views:[{type:mongoose.Schema.Types.ObjectId,ref:"user",default:[]}],
  likes_count:{type:Number,default:0},
  views_count:{type:Number,default:0},
  status:{type:String,enum:["published","draft","blocked","archived"],default:"draft"},

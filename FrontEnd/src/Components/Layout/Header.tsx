@@ -1,4 +1,4 @@
-import { Bell, Code, Rocket, User } from "lucide-react";
+import { Bell, Rocket, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import LogoApp from "../logocontainer";
 

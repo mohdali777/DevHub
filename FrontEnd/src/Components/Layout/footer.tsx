@@ -1,4 +1,5 @@
-import { Code, Github, Linkedin, Twitter } from "lucide-react";
+import {  Github, Linkedin, Twitter } from "lucide-react";
+import LogoApp from "../logocontainer";
 
 const Footer = () => {
   return (
@@ -7,8 +8,8 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <div className="bg-gradient-to-br from-blue-500 via-purple-600 to-pink-500 p-3 rounded-2xl">
-                <Code className="w-6 h-6 text-white" />
+              <div className="bg-gradient-to-br p-3 rounded-2xl">
+                <LogoApp w={"w-12"} h={"h-10"} />
               </div>
               <h3 className="text-xl font-black">DevHub</h3>
             </div>
