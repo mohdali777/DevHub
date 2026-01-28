@@ -19,7 +19,6 @@ onSuccess: async({code}) => {
 try {
 const response = await dispatch(GoogleAuth({token:code})).unwrap();
 console.log(response);
-
 } catch (error) {
 toast.error(error as string)
 }

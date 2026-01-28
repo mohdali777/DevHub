@@ -15,18 +15,21 @@ import ListInput from '../../../Components/input/textinputwithbutton';
 import type { Article } from '../../../Interface/Article';
 import SelectInput from '../../../Components/input/SelectInput';
 import RadioInput from '../../../Components/input/RadioInput';
+import { useSelector } from 'react-redux';
+import type { RootState } from '../../../Redux/store';
+import { AxiosError } from 'axios';
+import { toast } from 'sonner';
 
 const CreateArticleForm = () => {
 const [article, setArticle] = useState<Partial<Article>>({
 title: '',
 tags: [],
 category: '',
-author: '',
 status: 'draft'
 });
-
+const [file,SetFile] = useState<null|File>(null)
 const [coverPreview, setCoverPreview] = useState<string|null>(null);
-
+const {UserId} = useSelector((state:RootState)=>state.auth)
 // Sample categories (would come from API)
 const categories = [
 { id: '1', name: 'DevOps' },
@@ -41,13 +44,14 @@ const handleTitleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
 const title = e.target.value;
 setArticle({
 ...article,
-title,
+title
 });
 };
 
 const handleCoverImageUpload = (e:React.ChangeEvent<HTMLInputElement>) => {
 const file = e?.target?.files?.[0]  
 if (file) {
+SetFile(file)    
 const reader = new FileReader();
 reader.onloadend = () => {
 const base64String  = reader.result;
@@ -85,12 +89,22 @@ tags: (article.tags as string[]).filter(tag => tag !== tagToRemove)
 };
 
 const handleSubmit = (status:string) => {
-const articleData = {
+const articleData:Partial<Article> = {
 ...article,
-status
+author:UserId as string
 };
-console.log('Article Data:', JSON.stringify(articleData, null, 2));
-alert(`Article ${status === 'draft' ? 'saved as draft' : 'published'}! Check console for data.`);
+const Form = new FormData()
+Form.append("data",JSON.stringify(articleData))
+Form.append("CoverImage",file as File)
+try {
+    
+} catch (error) {
+if(error instanceof AxiosError){
+toast.error(error.response?.data.message||"failed to create")
+}else{
+toast.error("failed to create")
+}
+}
 };
 
 return (
