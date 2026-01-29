@@ -1,4 +1,5 @@
-export interface IUser{
+export interface USER_DTO{
+_id:string
 name:string,
 email:string,
 image:{
@@ -21,6 +22,7 @@ ending_date: string;
 employment_type: "full-time" | "part-time" | "contract" | "internship" | "freelance";
 location: string;
 duration:string
+status:"working"|"not-working"|''
 }[];
 education: {
 institution: string;
@@ -28,6 +30,7 @@ department: string;
 start_year: string;
 end_year: string;
 duration:string
+status:"studying"|"graduated"|''
 }[];
 social: {
 github: string;
@@ -37,7 +40,10 @@ portfolio: string;
 dribbble: string;
 behance: string;
 };
-};
+}
+role:"admin"|"user"|"author",
+is_verified:boolean,
+badge:"none"|"blue"|"silver"|"gold"|"red",
 stats:{
 saved_articles:string[],
 posts:string[],
@@ -45,11 +51,7 @@ comments:string[],
 followers:string[],
 following:string[]
 likes:string[]
-}
-password:string,
-googleid:string|null,
-role:"admin"|"user"|"author",
-is_verified:boolean,
-badge:"none"|"blue"|"silver"|"gold"|"red",
-status:"active"|"blocked"|"inactive"
+},
+status:"active"|"blocked"|"inactive",
+createdAt:Date
 }

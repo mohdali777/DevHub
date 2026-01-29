@@ -18,7 +18,7 @@ constructor(
 ){}
 async Login(Payload: LoginPayload): Promise<ReturnPayload> {
 try {
-const isUser =  await this.userRepo.FindOne({email:Payload.email})
+const isUser =  await this.userRepo.FindOneAuth({email:Payload.email})
 if(!isUser) throw new AppError("Invalid credentials",401)
 const isPasswordValid = await BcryptManager.dcrypt(Payload.password,isUser.password)  
 if(!isPasswordValid) throw new AppError("Invalid credentials",401)
@@ -94,7 +94,7 @@ throw error
 async GoogleSignin(Token: string): Promise<ReturnPayload> {
 try {    
 const Payload:any = await GoogleAuthClient.VerifyToken(Token)
-const IsUser = await this.userRepo.FindOne({email:Payload?.email})
+const IsUser = await this.userRepo.FindOneAuth({email:Payload?.email})
 const UserPaylod:TokenPayload = {
 UserId: IsUser?._id || "",
 UserName:IsUser?.name || Payload.name || "User",

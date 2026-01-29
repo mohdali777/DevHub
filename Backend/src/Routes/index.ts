@@ -7,7 +7,7 @@ const Routes = Express.Router();
 const Check = container.resolve(UserValidationMiddleware)
 Routes.use("/auth",AuthRoutes)
 
-// Routes.use(Check.UserCheck)
+Routes.use(Check.UserCheck)
 Routes.use("/user",UserRoutes)
 
 

@@ -7,14 +7,14 @@ const app = Express();
 
 export default function setupApp() {
 app.use(cors({
-    origin:"http://localhost:5173",
-    credentials: true, 
+origin:"http://localhost:5173",
+credentials: true, 
 }));
 app.use(Express.json());
 app.use(Express.urlencoded({ extended: true }));
 app.use(cookieparser())
 
-app.use("/",AppRoutes)
+app.use("/api",AppRoutes)
 
 app.use(ErrorHandler)
 return app;

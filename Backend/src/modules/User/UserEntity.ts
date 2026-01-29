@@ -22,9 +22,7 @@ Updated.googleid = Data.googleid
 return Updated
 }
 
-private ValidateCreate(Data:Partial<USER_DTO_REQ>):void{    
-    console.log(Data);
-     
+private ValidateCreate(Data:Partial<USER_DTO_REQ>):void{         
 if(Data.name){
 this._CheckRequiredString(Data.name,"user name")    
 }         
@@ -64,7 +62,6 @@ googleid:Data.is_google_signup?Data.googleid!:null,
 role:Data.is_signup?"user": Data.role!,
 is_verified:Data.is_signup ? false:Data.is_verified!,
 badge:Data.is_signup && !Data.is_verified ? "none" : Data.badge!,
-saved_articles: [],
 status:"active"    
 }
 }

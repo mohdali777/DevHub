@@ -104,5 +104,13 @@ next(error)
 }
 }
 
-
+Logout:RequestHandler = async(req,res,next)=>{
+try {
+res.clearCookie("AccessToken",{path:"/"})
+res.clearCookie("RefreshToken",{path:"/"})
+res.status(200).json({message:"logout successful"})
+} catch (error) {
+next(error)    
+}
+}
 }

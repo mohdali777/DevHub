@@ -35,7 +35,9 @@ enum: [
 ],
 default:""
 },
+duration:{ type: String,default:""},
 location: { type: String, default:""},
+default:[]
 },
 ],
 
@@ -45,19 +47,14 @@ institution: { type: String, default:""},
 department: { type: String, default:""},
 start_year: { type: String, default:""},
 end_year: { type: String, default:""},
+duration:{ type: String,default:""},
+default:[]
 },
 ],
-student_details: {
-university: { type: String, default: "" },
-course: { type: String, default: "" },
-current_year: { type: String, default: "" },
-starting_date: { type: String, default: "" },
-ending_date: { type: String, default: "" },
-},
 social: {
 github: { type: String, default: "" },
 linkedin: { type: String, default: "" },
-twitter: { type: String, default: "" },
+x: { type: String, default: "" },
 portfolio: { type: String, default: "" },
 dribbble: { type: String, default: "" },
 behance: { type: String, default: "" },
@@ -76,9 +73,18 @@ type: String,
 enum: ["none", "blue", "silver", "gold", "red"],
 default: "none",
 },
+stats: {
 saved_articles: [
 { type: mongoose.Schema.Types.ObjectId, ref: "article", default: [] },
 ],
+posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "post", default: [] }],
+comments: [
+{ type: mongoose.Schema.Types.ObjectId, ref: "comment", default: [] },
+],          
+followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "user", default: [] }],
+following: [{ type: mongoose.Schema.Types.ObjectId, ref: "user", default: [] }],
+likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "like", default: [] }],
+},    
 status: {
 type: String,
 enum: ["active", "blocked", "inactive"],

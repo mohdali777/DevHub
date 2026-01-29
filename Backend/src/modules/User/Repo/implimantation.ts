@@ -1,6 +1,6 @@
 import { injectable } from "tsyringe";
 import BaseRepo from "../../../core/BaseClass/BaseRepo/implimnatation";
-import { USER_DTO_DB, USER_DTO_REQ, USER_DTO_RES } from "../DTO";
+import { USER_DTO_AUTH, USER_DTO_DB, USER_DTO_REQ, USER_DTO_RES } from "../DTO";
 import UserModel from "../Model/implimantations";
 import { IUserRepo } from "./interface";
 import AppError from "../../../core/Error/Error";
@@ -11,50 +11,59 @@ constructor(){
 super(UserModel)
 }
 
-async FindOne(Filter: Partial<USER_DTO_REQ>): Promise<USER_DTO_RES|null> {
+private _mapToDTO(data: any): USER_DTO_RES {
+return {
+_id: data._id.toString(),
+name: data.name,
+email: data.email,
+image: data.image,
+about: data.about,
+role: data.role,
+badge: data.badge,
+stats: data.stats,
+is_verified: data.is_verified,
+status: data.status,
+createdAt: data.createdAt
+};
+}
+async FindOne(
+filter: Partial<USER_DTO_REQ>
+): Promise<USER_DTO_RES | null> {
 try {
-const Data = await UserModel.findOne(Filter).lean()
-if(!Data) return null
-return{
-_id: Data._id.toString(),
-name: Data.name,
-email: Data.email,
-image:Data.image,
-saved_articles:Data.saved_articles,
-is_verified: Data.is_verified,
-badge: Data.badge,
-password: Data.password,
-googleid: Data.googleid,
-role: Data.role,  
-status:Data.status
-}   
+const data = await UserModel.findOne(filter).lean();
+if (!data) return null;
+return this._mapToDTO(data);
 } catch (error) {
 console.log(error);
-throw new AppError("Error in Fetching User",500)
+throw new AppError("Error in Fetching User", 500);
 }
 }
+
 
 async  FindMany(Filter: Partial<USER_DTO_DB>): Promise<USER_DTO_RES[]|null> {
 try {
 const Data = await UserModel.find(Filter).lean()
 if(!Data) return null
-return Data.map((item)=>({
-_id: item._id.toString(),
-name: item.name,
-email: item.email,
-image:item.image,
-saved_articles:item.saved_articles,
-is_verified: item.is_verified,
-badge: item.badge,
-password: item.password,
-googleid: item.googleid,
-role: item.role, 
-status:item.status
-}))
+return Data.map(item => this._mapToDTO(item)) 
 } catch (error) {
 console.log(error);
 throw new AppError("Error in Fetching Users",500)
 }
 }
+
+
+async FindOneAuth(
+filter: Partial<USER_DTO_REQ>
+): Promise<USER_DTO_AUTH | null> {
+try {
+const data = await UserModel.findOne(filter).lean();
+if (!data) return null;
+return {...this._mapToDTO(data), password: data.password, googleid:data.googleid} as USER_DTO_AUTH;
+} catch (error) {
+console.log(error);
+throw new AppError("Error in Fetching User", 500);
+}
+}
+
 
 }

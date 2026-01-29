@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axiosInstance from "../../../Api/loginaxios";
+import axiosInstance from "../../../ApiServices/Api/loginaxios";
 import { AxiosError } from "axios";
 import type { InitialStateI } from "./slice";
 
@@ -54,6 +54,21 @@ try {
 const resonse = await axiosInstance.get("/verifyuser")
 const TokenPayload = resonse.data
 return TokenPayload as InitialStateI
+} catch (error) {
+if(error instanceof AxiosError){
+return thunkAPI.rejectWithValue(error.response?.data?.message||"login failed")
+}else{
+return thunkAPI.rejectWithValue("An unexpected error occurred")
+}
+}
+})
+
+
+export const LogoutUsers = createAsyncThunk(
+"auth/LogoutUsers",async (_,thunkAPI)=>{
+try {
+await axiosInstance.get("/logout")
+return 
 } catch (error) {
 if(error instanceof AxiosError){
 return thunkAPI.rejectWithValue(error.response?.data?.message||"login failed")

@@ -2,11 +2,11 @@
 import React, { useState } from 'react';
 import { CheckCircle, Shield, Award, Star } from 'lucide-react';
 
-const VerificationBadge = ({ type = 'blue', size = 20 }) => {
+const VerificationBadge = ({ type = 'blue', size = 20 }) => {  
   const [showTooltip, setShowTooltip] = useState(false);
 
   const badges = {
-    admin: {
+    red: {
       gradient: 'from-red-500 via-red-600 to-rose-600',
       shadow: 'shadow-red-500/50',
       icon: Shield,

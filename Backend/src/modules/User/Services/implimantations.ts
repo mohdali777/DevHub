@@ -42,8 +42,9 @@ throw error
 }
 }
 
-async FindOne(id:string): Promise<USER_DTO_RES | null> {
+async FindById(id:string): Promise<USER_DTO_RES | null> {
 try {
+if(!id) throw new AppError("something went wrong",400)
 const Filter:Partial<USER_DTO_REQ> = {}
 if(id) Filter._id = id
 return this.userRepo.FindOne(Filter)

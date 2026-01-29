@@ -10,5 +10,6 @@ Router.post("/googlelogin",Auth.GoogleAuth)
 Router.post("/signup",Auth.signup)
 Router.get("/GenarateAccess",Auth.GenarateAccess)
 Router.get("/verifyuser",Auth.VerifyUser)
+Router.get("/logout",Auth.Logout)
 
 export default Router;

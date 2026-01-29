@@ -15,15 +15,12 @@ UserCheck = async (req: Request, res: Response, next: NextFunction) => {
 try {
 const accessToken = req.cookies?.AccessToken;
 const refreshToken = req.cookies?.RefreshToken;
-
 if (!refreshToken) {
 return res
 .status(401)
 .json({ CODE: "REFRESH_MISSING", message: "Refresh token missing" });
 }
-
 let UserId:string|null = null
-
 try {
 const refreshPayload:TokenPayload = this.tokenService.verifyRefreshToken(
 refreshToken
@@ -34,14 +31,11 @@ return res
 .status(401)
 .json({ CODE: "REFRESH_INVALID", message: "Refresh token invalid" });
 }
-
-
 if (!UserId) {
 return res
 .status(401)
 .json({ CODE: "REFRESH_INVALID", message: "Invalid refresh payload" });
 }
-
 const user = await this.userRepo.FindOne({ _id: UserId });
 
 if (!user) {
